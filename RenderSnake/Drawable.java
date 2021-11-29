@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.ArrayList;
-
 public abstract class Drawable{
     protected Canvas canvas;
     public abstract void draw(Graphics2D graphics);
@@ -60,6 +59,7 @@ class TraceFixedPoint extends Drawable{
     private int length; //segment length
     private int num; //number of segments
     private Vector2 lastPos;
+    private double size = 5;
     public TraceFixedPoint(int len, int num, float radius){
         this.length = len;
         this.num = num;
@@ -71,6 +71,13 @@ class TraceFixedPoint extends Drawable{
         update();
         for(Vector2 point: segments){
             g.drawOval((int)point.x, (int)point.y,5,5);
+        }
+        for(int i = 1; i < segments.size(); i++){
+            Vector2 toHead = segments.get(i).to(segments.get(i-1));
+            var unitv = toHead.unitV();
+            var point1 = segments.get(i).add(unitv.scale((double)(size)/2)).add(new Vector2((double)(size)/2,(double)(size)/2));
+            var point2 = segments.get(i-1).add(unitv.scale(-(double)(size)/2)).add(new Vector2((double)(size)/2,(double)(size)/2));
+            g.drawLine((int)point1.x,(int)point1.y,(int)point2.x,(int)point2.y);
         }
     }
     public void update(){
