@@ -41,19 +41,12 @@ public class Canvas extends JComponent implements Runnable {
     public void run(){
         JFrame frame = new JFrame();
         Container content = frame.getContentPane();
-        Canvas canvas = new Canvas();
 
-        content.add(canvas, BorderLayout.CENTER);
+        content.add(this, BorderLayout.CENTER);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
-
-        var mc = new MovingCircle();
-        //var s = new Snake(30,10);
-        var s2 = new TraceFixedPoint(14,50,0.1f);
-        //canvas.addDrawable(mc);
-        canvas.addDrawable(s2);
     }
 
     protected void paintComponent(Graphics g) {
