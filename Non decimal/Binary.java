@@ -41,6 +41,7 @@ public class Binary {
         return binary.get(binary.size()-index-1);
     }
 
+    //bridge a shell object used to pass methods in
     private Binary operation(Binary b, I bridge){
         var result = new ArrayList<Boolean>();
         var tempA = this.getBinary();

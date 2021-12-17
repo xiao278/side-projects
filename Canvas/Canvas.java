@@ -13,6 +13,8 @@ public class Canvas extends JComponent implements Runnable {
     int yPos;
     Point mousePos;
     public ArrayList<Drawable> drawables;
+    JFrame frame;
+    Container content;
 
     public Canvas() {
         drawables = new ArrayList<>();
@@ -32,6 +34,11 @@ public class Canvas extends JComponent implements Runnable {
                 repaint();
             }
         });
+        SwingUtilities.invokeLater(this);
+    }
+
+    public Canvas(int filler){
+        super();
     }
 
     public static void main(String[] args) {
@@ -39,14 +46,15 @@ public class Canvas extends JComponent implements Runnable {
     }
 
     public void run(){
-        JFrame frame = new JFrame();
-        Container content = frame.getContentPane();
+        frame = new JFrame();
+        content = frame.getContentPane();
 
         content.add(this, BorderLayout.CENTER);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
+
     }
 
     protected void paintComponent(Graphics g) {
