@@ -32,8 +32,8 @@ class TraceFixedPoint extends Drawable {
         }
     }
 
-    public void update() {
-        Vector2 newPos = new Vector2(canvas.xPos, canvas.yPos);
+    private void update() {
+        Vector2 newPos = new Vector2(myCanvas.xPos, myCanvas.yPos);
         Vector2 dPos = lastPos.to(newPos);
         double dPosLen = dPos.len();
         //capping how muc the head will move in one update
@@ -70,11 +70,11 @@ class TraceFixedPoint extends Drawable {
     }
 
     @Override
-    public void setC(Canvas c) {
+    public void setC(MyCanvas c) {
         super.setC(c);
-        lastPos = new Vector2(canvas.xPos, canvas.yPos);
+        lastPos = new Vector2(myCanvas.xPos, myCanvas.yPos);
         for (int i = 0; i < num; i++) {
-            segments.add(new Vector2(Math.random() * 10 - 5 + canvas.getWidth() / 2.0, Math.random() * 10 - 5 + canvas.getHeight() / 2.0));
+            segments.add(new Vector2(Math.random() * 10 - 5 + myCanvas.getWidth() / 2.0, Math.random() * 10 - 5 + myCanvas.getHeight() / 2.0));
         }
         for (int i = 0; i < segments.size() - 1; i++) {
             followPoints.add(segments.get(i));

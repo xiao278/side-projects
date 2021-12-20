@@ -1,8 +1,9 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class TimedCanvas extends Canvas{
+public class TimedCanvas extends MyCanvas {
     int interval;
     Timer timer;
 
@@ -38,5 +39,15 @@ public class TimedCanvas extends Canvas{
             }
         });
         timer.start();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        mousePos = getMousePosition();
+    }
+
+    public int getInterval(){
+        return interval;
     }
 }

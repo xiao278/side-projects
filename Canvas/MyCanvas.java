@@ -1,28 +1,37 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Canvas extends JComponent implements Runnable {
+public class MyCanvas extends JComponent implements Runnable {
 
     private Graphics2D graphics2D;
     Image image;
     int xPos;
     int yPos;
     Point mousePos;
+    private Point realMousePos;
     public ArrayList<Drawable> drawables;
     JFrame frame;
     Container content;
-
-    public Canvas() {
+    boolean pressed;
+    Timer timer;
+    int interval;
+    public MyCanvas(int interval) {
         drawables = new ArrayList<>();
+        this.realMousePos = new Point(getWidth()/2, getHeight()/2);
+        this.interval = interval;
         addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                pressed = true;
                 mousePos = e.getPoint();
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                pressed = false;
             }
         });
 
@@ -31,18 +40,15 @@ public class Canvas extends JComponent implements Runnable {
                 xPos += e.getX() - mousePos.x;
                 yPos += e.getY() - mousePos.y;
                 mousePos = e.getPoint();
-                repaint();
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                realMousePos = e.getPoint();
+                //System.out.println(e.getX() + "," + e.getY());
             }
         });
         SwingUtilities.invokeLater(this);
-    }
-
-    public Canvas(int filler){
-        super();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Canvas());
     }
 
     public void run(){
@@ -52,9 +58,15 @@ public class Canvas extends JComponent implements Runnable {
         content.add(this, BorderLayout.CENTER);
         frame.setSize(600, 400);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        timer = new Timer(interval, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                repaint();
+            }
+        });
+        timer.start();
     }
 
     protected void paintComponent(Graphics g) {
@@ -88,5 +100,13 @@ public class Canvas extends JComponent implements Runnable {
     public void addDrawable(Drawable drawable){
         drawables.add(drawable);
         drawable.setC(this);
+    }
+
+    public int getInterval() {
+        return interval;
+    }
+
+    public Vector2 getMousePos(){
+        return new Vector2(realMousePos.x,realMousePos.y);
     }
 }

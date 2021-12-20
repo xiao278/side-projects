@@ -29,7 +29,7 @@ class Snake extends Drawable {
     }
 
     public void update() {
-        points.set(0, new Vector2(canvas.xPos, canvas.yPos));
+        points.set(0, new Vector2(myCanvas.xPos, myCanvas.yPos));
         for (int i = 1; i < points.size(); i++) {
             Vector2 toHead = points.get(i).to(points.get(i - 1));
             double moveFactor = toHead.len() - length;
