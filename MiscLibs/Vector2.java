@@ -5,6 +5,10 @@ public class Vector2 {
         this.x = x;
         this.y = y;
     }
+    Vector2(double angle){
+        this.x = Math.cos(angle);
+        this.y = Math.sin(angle);
+    }
     Vector2(){
         this.x = 0;
         this.y = 0;
