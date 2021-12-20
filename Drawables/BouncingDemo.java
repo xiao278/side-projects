@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class BouncingDemo extends Drawable{
+public class BouncingDemo extends Drawable {
     int size;
     Vector2 position;
     Vector2 velocity;
