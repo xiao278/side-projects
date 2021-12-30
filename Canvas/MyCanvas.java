@@ -17,10 +17,12 @@ public class MyCanvas extends JComponent implements Runnable {
     boolean pressed;
     Timer timer;
     int interval;
-    public MyCanvas(int interval) {
+    int width, height;
+    public MyCanvas(int interval, int width, int height) {
         drawables = new ArrayList<>();
         this.realMousePos = new Point(getWidth()/2, getHeight()/2);
         this.interval = interval;
+        this.width = width; this.height = height;
         addMouseListener(new MouseAdapter() {
 
             @Override
@@ -51,12 +53,17 @@ public class MyCanvas extends JComponent implements Runnable {
         SwingUtilities.invokeLater(this);
     }
 
+    public MyCanvas(int interval){
+        this(interval,600,400);
+    }
+
+
     public void run(){
         frame = new JFrame();
         content = frame.getContentPane();
 
         content.add(this, BorderLayout.CENTER);
-        frame.setSize(600, 400);
+        frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

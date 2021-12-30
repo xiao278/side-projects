@@ -7,7 +7,7 @@ public class Main extends Drawable{
     //a constant that determine how fast the projectile will fly
     private double force = 0.1;
     protected ArrayList<Projectile> projectiles;
-    private double g = 0.2;
+    private double g = 0.4;
     private int size;
 
     public Main(){
@@ -35,7 +35,7 @@ public class Main extends Drawable{
         if(pressDown == null && myCanvas.pressed){
             pressDown = myCanvas.getMousePos();
         } else if(pressDown != null && !myCanvas.pressed){
-            projectiles.add(new Projectile(pressDown, (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force),g));
+            addProjectile(new Projectile(pressDown, (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force),size,g));
             pressDown = null;
         }
 
@@ -43,25 +43,26 @@ public class Main extends Drawable{
             for(int i = projectiles.size()-1; i >= 0; i--){
                 var p = projectiles.get(i);
                 p.update(myCanvas.timer.getDelay());
-                if(p.getPosition().x > myCanvas.getWidth()){
-                    projectiles.remove(p);
-                }
-                else if(p.getPosition().x + size < 0){
-                    projectiles.remove(p);
-                }
-                else if(p.getPosition().y > myCanvas.getHeight()){
-                    projectiles.remove(p);
-                }
-                else if(p.getPosition().y + size < 0){
+                if(p.checkDestroyed()){
                     projectiles.remove(p);
                 }
             }
         }
+        //System.out.println(projectiles.size());
     }
 
     public static void main(String[] args) {
         var main = new Main();
-        var mc = new MyCanvas(10);
+        var mc = new MyCanvas(10,1000,600);
         mc.addDrawable(main);
+    }
+
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
+
+    public void addProjectile(Projectile p){
+        projectiles.add(p);
+        p.initialize(myCanvas);
     }
 }
