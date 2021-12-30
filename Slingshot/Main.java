@@ -13,6 +13,7 @@ public class Main extends Drawable{
     public Main(){
         projectiles = new ArrayList<>();
         size = 10;
+        Projectile.setG(g);
     }
 
     @Override
@@ -35,7 +36,8 @@ public class Main extends Drawable{
         if(pressDown == null && myCanvas.pressed){
             pressDown = myCanvas.getMousePos();
         } else if(pressDown != null && !myCanvas.pressed){
-            addProjectile(new Projectile(pressDown, (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force),size,g));
+
+            addProjectile(new Projectile(pressDown, (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force),size));
             pressDown = null;
         }
 

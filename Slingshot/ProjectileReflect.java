@@ -1,6 +1,6 @@
 public class ProjectileReflect extends Projectile{
-    public ProjectileReflect(Vector2 position, Vector2 velocity,int size, double g){
-        super(position,velocity,size,g);
+    public ProjectileReflect(Vector2 position, Vector2 velocity,int size){
+        super(position,velocity,size);
     }
 
     @Override

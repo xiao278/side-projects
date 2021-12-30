@@ -1,17 +1,22 @@
+import java.util.ArrayList;
+
 public class Projectile {
     protected Vector2 velocity;
     protected Vector2 position;
-    protected double g;
+    protected static double g;
     protected MyCanvas myCanvas;
     protected int size;
 
-    protected static Vector2 pathPos;
     protected static Vector2 pathVel;
 
-    public Projectile(Vector2 position, Vector2 velocity, int size, double g){
+    public Projectile(Vector2 position, Vector2 velocity, int size){
         this.velocity = velocity;
         this.position = position;
-        this.g = g;
+        this.size = size;
+    }
+
+    public static void setG(double newg) {
+        g = newg;
     }
 
     public Vector2 getPosition() {
@@ -67,13 +72,22 @@ public class Projectile {
         return this.getPosition().y < 0;
     }
 
-    public static void renderPath(Vector2 position, Vector2 velocity){
-        pathPos = position;
+    public static ArrayList<Vector2> getPath(Vector2 position, Vector2 velocity, MyCanvas mc){
         pathVel = velocity;
+        int spacing = 20;
+        int velSign = (int)(pathVel.x/Math.abs(pathVel.x));
+        spacing *= velSign;
+
+        var arr = new ArrayList<Vector2>();
+        for(int x = (int)position.x; x > 0 || x < mc.getWidth(); x += spacing){
+            arr.add(new Vector2(x, getPointY(x)));
+        }
+
+        return arr;
     }
 
     //relative to the shooting point
-    private double getPathY(double x){
+    private static double getPointY(double x){
         return x*(pathVel.y/pathVel.x)-g*(x*x)/(2*(pathVel.len()*pathVel.len())*(pathVel.x*pathVel.x));
     }
 }
