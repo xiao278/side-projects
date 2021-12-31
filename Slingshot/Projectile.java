@@ -73,14 +73,19 @@ public class Projectile {
     }
 
     public static ArrayList<Vector2> getPath(Vector2 position, Vector2 velocity, MyCanvas mc){
-        pathVel = velocity;
-        int spacing = 20;
+        pathVel = velocity.scale(0.38);
+        int spacing = 10;
+        int iterations = 30;
         int velSign = (int)(pathVel.x/Math.abs(pathVel.x));
         spacing *= velSign;
 
         var arr = new ArrayList<Vector2>();
-        for(int x = (int)position.x; x > 0 || x < mc.getWidth(); x += spacing){
-            arr.add(new Vector2(x, getPointY(x)));
+        int x = spacing;
+        for(int i = 0; i < iterations; i++){
+            var temp = new Vector2(x, getPointY(x));
+            temp = temp.add(position);
+            arr.add(temp);
+            x += spacing;
         }
 
         return arr;
@@ -88,6 +93,7 @@ public class Projectile {
 
     //relative to the shooting point
     private static double getPointY(double x){
-        return x*(pathVel.y/pathVel.x)-g*(x*x)/(2*(pathVel.len()*pathVel.len())*(pathVel.x*pathVel.x));
+        var grav = g*1.4;
+        return x*(pathVel.y/pathVel.x)+grav*(x*x)/(2*(pathVel.len()*pathVel.len())*(pathVel.x*pathVel.x));
     }
 }

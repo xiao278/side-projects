@@ -7,7 +7,7 @@ public class Main extends Drawable{
     //a constant that determine how fast the projectile will fly
     private double force = 0.1;
     protected ArrayList<Projectile> projectiles;
-    private double g = 0.4;
+    private double g = 0.2;
     private int size;
 
     public Main(){
@@ -22,6 +22,10 @@ public class Main extends Drawable{
         if(pressDown != null){
             graphics.drawOval((int)pressDown.x,(int)pressDown.y,size,size);
             graphics.drawOval(myCanvas.mousePos.x,myCanvas.mousePos.y,size,size);
+            var arr = Projectile.getPath(pressDown,pVel(),myCanvas);
+            for(Vector2 v : arr){
+                graphics.drawRect((int)v.x,(int)v.y,5,5);
+            }
         }
         if(projectiles.size() > 0){
             for(int i = 0; i < projectiles.size(); i++){
@@ -37,7 +41,7 @@ public class Main extends Drawable{
             pressDown = myCanvas.getMousePos();
         } else if(pressDown != null && !myCanvas.pressed){
 
-            addProjectile(new Projectile(pressDown, (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force),size));
+            addProjectile(new Projectile(pressDown, pVel(),size));
             pressDown = null;
         }
 
@@ -66,5 +70,17 @@ public class Main extends Drawable{
     public void addProjectile(Projectile p){
         projectiles.add(p);
         p.initialize(myCanvas);
+    }
+
+
+    //calculates velocity vector of projectile, returns zero vector if invalid
+    private Vector2 pVel(){
+        if(pressDown != null){
+            return (new Vector2(myCanvas.mousePos.x,myCanvas.mousePos.y)).to(pressDown).scale(force);
+        }
+        else {
+            System.out.println("egg");
+            return new Vector2(0, 0);
+        }
     }
 }
