@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Drawables" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/MiscLibs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Slingshot" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TermHandler" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
